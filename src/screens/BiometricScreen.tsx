@@ -1,19 +1,19 @@
 import React, {FC} from 'react';
+import {View, StyleSheet, Button} from 'react-native';
 import {AppStackParamsList} from '@navigation/AppRoutes';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {View, StyleSheet, Button} from 'react-native';
 
-interface AuthenticationScreenProps {}
+interface BiometricScreenProps {}
 
-const AuthenticationScreen: FC<AuthenticationScreenProps> = () => {
+const BiometricScreen: FC<BiometricScreenProps> = () => {
   const navigation = useNavigation<StackNavigationProp<AppStackParamsList>>();
   const onNext = () => {
-    navigation.navigate('BiometricScreen');
+    navigation.navigate('NoteScreen');
   };
   return (
     <View style={styles.container}>
-      <Button title="Password" onPress={onNext} />
+      <Button title="NoteScreen" onPress={onNext} />
     </View>
   );
 };
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-export default AuthenticationScreen;
+export default BiometricScreen;
