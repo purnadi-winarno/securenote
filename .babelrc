@@ -9,6 +9,7 @@
         "alias": {
           "@components": "./src/components",
           "@navigation": "./src/navigation",
+          "@helpers": "./src/helpers",
           "@screens": "./src/screens"
         }
       }

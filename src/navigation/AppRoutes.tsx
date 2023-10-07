@@ -1,14 +1,16 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
-import NoteScreen from '@screens/NoteScreen';
+import NoteListScreen from '@screens/NoteListScreen';
 import BiometricScreen from '@screens/BiometricScreen';
 import {screenOptions} from './navigationOptions';
+import AddNewListScreen from '@screens/AddNewListScreen';
 
 export type AppStackParamsList = {
   AuthenticationScreen: undefined;
   BiometricScreen: undefined;
-  NoteScreen: undefined;
+  NoteListScreen: undefined;
+  AddNewListScreen: undefined;
 };
 
 export type AppStackRouteProps<RouteName extends keyof AppStackParamsList> =
@@ -16,9 +18,12 @@ export type AppStackRouteProps<RouteName extends keyof AppStackParamsList> =
 
 const AppStack = createStackNavigator();
 const AppStackNavigator = () => (
-  <AppStack.Navigator screenOptions={screenOptions}>
+  <AppStack.Navigator
+    screenOptions={screenOptions}
+    initialRouteName="NoteListScreen">
     <AppStack.Screen name="BiometricScreen" component={BiometricScreen} />
-    <AppStack.Screen name="NoteScreen" component={NoteScreen} />
+    <AppStack.Screen name="NoteListScreen" component={NoteListScreen} />
+    <AppStack.Screen name="AddNewListScreen" component={AddNewListScreen} />
   </AppStack.Navigator>
 );
 

@@ -32,7 +32,7 @@ const BiometricScreen: FC<BiometricScreenProps> = () => {
           const {success} = resultObject;
 
           if (success) {
-            navigation.navigate('NoteScreen');
+            navigation.navigate('NoteListScreen');
           } else {
             console.log('user cancelled biometric prompt');
           }
