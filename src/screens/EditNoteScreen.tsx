@@ -5,8 +5,8 @@ import {updateNote} from '@helpers/encryptedStorage';
 import {AppStackParamsList, AppStackRouteProps} from '@navigation/AppRoutes';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {FC, useCallback, useState} from 'react';
-import {View, StyleSheet, TextInput} from 'react-native';
+import React, {FC, useCallback, useRef, useState} from 'react';
+import {View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 interface EditNoteScreenProps {}
@@ -14,6 +14,7 @@ interface EditNoteScreenProps {}
 const EditNoteScreen: FC<EditNoteScreenProps> = () => {
   const navigation = useNavigation<StackNavigationProp<AppStackParamsList>>();
   const route = useRoute<AppStackRouteProps<'EditNoteScreen'>>();
+  const inputRef = useRef<TextInput>(null);
 
   const [noteId] = useState(route?.params?.id!);
   const [note, setNote] = useState(route?.params?.value);
@@ -36,19 +37,27 @@ const EditNoteScreen: FC<EditNoteScreenProps> = () => {
     }
   }, [note]);
 
+  const onFocusInput = () => {
+    inputRef?.current?.focus();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <TitleText text={'Update Note'} />
-        <View style={styles.inputWrapper}>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.inputWrapper}
+          onPress={onFocusInput}>
           <TextInput
+            ref={inputRef}
             placeholder="Type your note here.."
             onChangeText={setNote}
             value={note}
             multiline={true}
             numberOfLines={3}
           />
-        </View>
+        </TouchableOpacity>
         <ErrorText text={showError ? 'note can not be empty!' : ''} />
         <RoundButton
           label={loading ? 'Updating..' : 'Update'}
