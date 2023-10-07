@@ -2,7 +2,8 @@ import React, {FC} from 'react';
 import {AppStackParamsList} from '@navigation/AppRoutes';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {View, StyleSheet, Button} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import RoundButton from '@components/RoundButton';
 
 interface AuthenticationScreenProps {}
 
@@ -13,7 +14,7 @@ const AuthenticationScreen: FC<AuthenticationScreenProps> = () => {
   };
   return (
     <View style={styles.container}>
-      <Button title="Password" onPress={onNext} />
+      <RoundButton label="Authenticate" onPress={onNext} />
     </View>
   );
 };
