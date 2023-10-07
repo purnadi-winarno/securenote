@@ -1,5 +1,6 @@
-import NoteList from '@components/NoteList';
+import NoteList from '@components/Note/NoteList';
 import RoundButton from '@components/RoundButton';
+import TitleText from '@components/Text/TitleText';
 import {getNotes} from '@helpers/encryptedStorage';
 import {AppStackParamsList} from '@navigation/AppRoutes';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
@@ -31,7 +32,7 @@ const NoteListScreen: FC<NoteListScreenProps> = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Text>Your Notes:</Text>
+        <TitleText text="Your Notes:" />
         <NoteList data={notes} />
       </View>
       <RoundButton label="Add Note" onPress={addNewNote} />

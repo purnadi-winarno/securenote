@@ -1,5 +1,6 @@
 import RoundButton from '@components/RoundButton';
 import ErrorText from '@components/Text/ErrorText';
+import TitleText from '@components/Text/TitleText';
 import {addNote} from '@helpers/encryptedStorage';
 import {AppStackParamsList} from '@navigation/AppRoutes';
 import {useNavigation} from '@react-navigation/native';
@@ -35,7 +36,7 @@ const AddNewListScreen: FC<AddNewListScreenProps> = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Text>Add New Note</Text>
+        <TitleText text={'Add New Note'} />
         <View style={styles.inputWrapper}>
           <TextInput
             placeholder="Type your note here.."
