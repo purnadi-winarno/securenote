@@ -53,5 +53,9 @@
 	<false/>
 	<key>NSFaceIDUsageDescription</key>
 	<string>The app wanna access biometric for auth</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>AntDesign.ttf</string>
+	</array>	
 </dict>
 </plist>
