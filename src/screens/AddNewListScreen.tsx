@@ -6,8 +6,16 @@ import {AppStackParamsList} from '@navigation/AppRoutes';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {FC, useCallback, useRef, useState} from 'react';
-import {View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+
+const IS_IOS = Platform.OS === 'ios';
 
 interface AddNewListScreenProps {}
 
@@ -67,7 +75,7 @@ const AddNewListScreen: FC<AddNewListScreenProps> = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
+    padding: 16,
   },
   content: {
     flex: 1,
@@ -78,7 +86,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderWidth: 1,
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingVertical: IS_IOS ? 8 : 0,
     marginTop: 20,
     minHeight: 100,
   },
