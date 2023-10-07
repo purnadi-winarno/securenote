@@ -5,11 +5,12 @@
  * @format
  */
 
+import PasswordAuth from '@components/Password/PasswordAuth';
 import RoundButton from '@components/RoundButton';
 import {AppStackParamsList} from '@navigation/AppRoutes';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {FC, useState} from 'react';
+import React, {FC, useMemo, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import ReactNativeBiometrics from 'react-native-biometrics';
 
@@ -24,7 +25,6 @@ const BiometricScreen: FC<BiometricScreenProps> = () => {
   async function startBiometric() {
     const {biometryType} = await rnBiometrics.isSensorAvailable();
 
-    console.log('biometryType: ', JSON.stringify(biometryType, null, 3));
     if (biometryType) {
       rnBiometrics
         .simplePrompt({promptMessage: 'Confirm fingerprint to continue'})
@@ -45,18 +45,21 @@ const BiometricScreen: FC<BiometricScreenProps> = () => {
     }
   }
 
-  return (
-    <View style={styles.container}>
-      <RoundButton label="Authenticate" onPress={startBiometric} />
-    </View>
-  );
+  const _renderAuth = useMemo(() => {
+    if (isBiometricAvailable) {
+      return <RoundButton label="Authenticate" onPress={startBiometric} />;
+    }
+    return <PasswordAuth />;
+  }, [isBiometricAvailable]);
+
+  return <View style={styles.container}>{_renderAuth}</View>;
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 16,
     justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 

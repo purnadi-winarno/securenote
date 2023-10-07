@@ -10,7 +10,7 @@ import EditNoteScreen from '@screens/EditNoteScreen';
 export type AppStackParamsList = {
   AuthenticationScreen: undefined;
   BiometricScreen: undefined;
-  NoteListScreen: {
+  NoteListScreen?: {
     refresher?: Object;
   };
   AddNewListScreen: undefined;
@@ -25,9 +25,7 @@ export type AppStackRouteProps<RouteName extends keyof AppStackParamsList> =
 
 const AppStack = createStackNavigator();
 const AppStackNavigator = () => (
-  <AppStack.Navigator
-    screenOptions={screenOptions}
-    initialRouteName="NoteListScreen">
+  <AppStack.Navigator screenOptions={screenOptions}>
     <AppStack.Screen name="BiometricScreen" component={BiometricScreen} />
     <AppStack.Screen name="NoteListScreen" component={NoteListScreen} />
     <AppStack.Screen name="AddNewListScreen" component={AddNewListScreen} />

@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     alignSelf: 'center',
     marginTop: 20,
+    borderWidth: 1,
+    borderColor: '#ccc',
   },
   center: {
     textAlign: 'center',

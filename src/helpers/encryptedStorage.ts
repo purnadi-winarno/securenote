@@ -2,6 +2,11 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import uuid from 'react-native-uuid';
 import {NoteType} from 'src/types/noteType';
 const NOTE_KEY = 'kNote';
+const PASS_KEY = 'kPass';
+
+/*
+ * Notes
+ */
 
 export async function addNote(value: string) {
   try {
@@ -51,6 +56,29 @@ export async function updateNote(id: string, value: string) {
       return note;
     });
     await EncryptedStorage.setItem(NOTE_KEY, JSON.stringify(restNote));
+  } catch (error) {
+    // There was an error on the native side
+    console.log('error: ', JSON.stringify(error, null, 3));
+  }
+}
+
+/*
+ * Password
+ */
+export async function getCurrentPassword() {
+  try {
+    const password = await EncryptedStorage.getItem(PASS_KEY);
+    return password;
+  } catch (error) {
+    // There was an error on the native side
+    console.log('error: ', JSON.stringify(error, null, 3));
+    return '';
+  }
+}
+
+export async function setCurrentPassword(pass: string) {
+  try {
+    await EncryptedStorage.setItem(PASS_KEY, pass);
   } catch (error) {
     // There was an error on the native side
     console.log('error: ', JSON.stringify(error, null, 3));
