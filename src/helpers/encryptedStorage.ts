@@ -29,3 +29,30 @@ export async function getNotes() {
     return [];
   }
 }
+
+export async function removeNote(id: string) {
+  try {
+    const noteList: NoteType[] = await getNotes();
+    const restNote = noteList.filter(note => note.id !== id);
+    await EncryptedStorage.setItem(NOTE_KEY, JSON.stringify(restNote));
+  } catch (error) {
+    // There was an error on the native side
+    console.log('error: ', JSON.stringify(error, null, 3));
+  }
+}
+
+export async function updateNote(id: string, value: string) {
+  try {
+    const noteList: NoteType[] = await getNotes();
+    const restNote = noteList.map(note => {
+      if (note.id === id) {
+        note.value = value;
+      }
+      return note;
+    });
+    await EncryptedStorage.setItem(NOTE_KEY, JSON.stringify(restNote));
+  } catch (error) {
+    // There was an error on the native side
+    console.log('error: ', JSON.stringify(error, null, 3));
+  }
+}

@@ -2,8 +2,8 @@ import NoteList from '@components/Note/NoteList';
 import RoundButton from '@components/RoundButton';
 import TitleText from '@components/Text/TitleText';
 import {getNotes} from '@helpers/encryptedStorage';
-import {AppStackParamsList} from '@navigation/AppRoutes';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {AppStackParamsList, AppStackRouteProps} from '@navigation/AppRoutes';
+import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {FC, useEffect, useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
@@ -14,16 +14,22 @@ interface NoteListScreenProps {}
 
 const NoteListScreen: FC<NoteListScreenProps> = () => {
   const navigation = useNavigation<StackNavigationProp<AppStackParamsList>>();
+  const route = useRoute<AppStackRouteProps<'NoteListScreen'>>();
+
   const isFocused = useIsFocused();
+  const refresher = route?.params?.refresher;
+
   const [notes, setNotes] = useState<NoteType[]>([]);
 
   useEffect(() => {
     async function getNoteList() {
       const noteList = await getNotes();
-      setNotes(noteList);
+      setTimeout(() => {
+        setNotes(noteList);
+      }, 300);
     }
     getNoteList();
-  }, [isFocused]);
+  }, [isFocused, refresher]);
 
   function addNewNote() {
     navigation.navigate('AddNewListScreen');
@@ -33,8 +39,14 @@ const NoteListScreen: FC<NoteListScreenProps> = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <TitleText text="Your Notes:" />
+        <Text style={styles.notice}>
+          {notes?.length > 0
+            ? 'Press to edit / delete note below!'
+            : 'Create your first note now!'}
+        </Text>
         <NoteList data={notes} />
       </View>
+
       <RoundButton label="Add Note" onPress={addNewNote} />
     </SafeAreaView>
   );
@@ -52,6 +64,15 @@ const styles = StyleSheet.create({
   noteList: {
     width: '100%',
     backgroundColor: '#fff',
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  notice: {
+    backgroundColor: '#ccc',
+    padding: 8,
+    marginBottom: 16,
+    color: '#555',
   },
 });
 export default NoteListScreen;

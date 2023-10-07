@@ -1,31 +1,33 @@
 import RoundButton from '@components/RoundButton';
 import ErrorText from '@components/Text/ErrorText';
 import TitleText from '@components/Text/TitleText';
-import {addNote} from '@helpers/encryptedStorage';
-import {AppStackParamsList} from '@navigation/AppRoutes';
-import {useNavigation} from '@react-navigation/native';
+import {updateNote} from '@helpers/encryptedStorage';
+import {AppStackParamsList, AppStackRouteProps} from '@navigation/AppRoutes';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {FC, useCallback, useRef, useState} from 'react';
-import {View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import React, {FC, useCallback, useState} from 'react';
+import {View, StyleSheet, TextInput} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-interface AddNewListScreenProps {}
+interface EditNoteScreenProps {}
 
-const AddNewListScreen: FC<AddNewListScreenProps> = () => {
+const EditNoteScreen: FC<EditNoteScreenProps> = () => {
   const navigation = useNavigation<StackNavigationProp<AppStackParamsList>>();
-  const inputRef = useRef<TextInput>(null);
-  const [note, setNote] = useState('');
+  const route = useRoute<AppStackRouteProps<'EditNoteScreen'>>();
+
+  const [noteId] = useState(route?.params?.id!);
+  const [note, setNote] = useState(route?.params?.value);
   const [showError, setShowError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const onSaveNote = useCallback(async () => {
+  const onUpdateNote = useCallback(async () => {
     if (!note) {
       setShowError(true);
     } else {
       try {
         setLoading(true);
         setShowError(false);
-        await addNote(note);
+        await updateNote(noteId, note);
         setLoading(false);
         navigation.goBack();
       } catch (error) {
@@ -34,31 +36,23 @@ const AddNewListScreen: FC<AddNewListScreenProps> = () => {
     }
   }, [note]);
 
-  const onFocusInput = () => {
-    inputRef?.current?.focus();
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <TitleText text={'Add New Note'} />
-        <TouchableOpacity
-          activeOpacity={1}
-          style={styles.inputWrapper}
-          onPress={onFocusInput}>
+        <TitleText text={'Update Note'} />
+        <View style={styles.inputWrapper}>
           <TextInput
-            ref={inputRef}
             placeholder="Type your note here.."
             onChangeText={setNote}
             value={note}
             multiline={true}
             numberOfLines={3}
           />
-        </TouchableOpacity>
+        </View>
         <ErrorText text={showError ? 'note can not be empty!' : ''} />
         <RoundButton
-          label={loading ? 'Saving..' : 'Save'}
-          onPress={onSaveNote}
+          label={loading ? 'Updating..' : 'Update'}
+          onPress={onUpdateNote}
         />
       </View>
     </SafeAreaView>
@@ -83,4 +77,4 @@ const styles = StyleSheet.create({
     minHeight: 100,
   },
 });
-export default AddNewListScreen;
+export default EditNoteScreen;
