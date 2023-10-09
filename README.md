@@ -53,6 +53,16 @@ npm run ios
 yarn ios
 ```
 
+## Video Demo
+
+### Biometric Authentication (Tested on Android Samsung A52)
+
+[![Video Title](http://img.youtube.com/vi/Dk4PF5_u8Yw/0.jpg)](https://youtu.be/Dk4PF5_u8Yw)
+
+### Password fallback (Tested on IOS Simulator iPhone 14 Pro)
+
+[![Video Title](http://img.youtube.com/vi/6tYfz5GoEPg/3.jpg)](https://youtu.be/6tYfz5GoEPg)
+
 # Can't run the app?
 
 if you have any issue during running the app, please contact me via purnadi.winarno@gmail.com
